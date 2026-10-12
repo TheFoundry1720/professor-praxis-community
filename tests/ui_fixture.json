@@ -1,0 +1,158 @@
+{
+  "fixture_notice": "Synthetic UI test data only; never auto-added by init. These are not real assessments or researched claims.",
+  "records": [
+    {
+      "id": "article:synthetic-alpha",
+      "realm": "personal",
+      "kind": "article",
+      "title": "Synthetic article: local files",
+      "author": "Example author",
+      "url": "https://example.org/learning",
+      "captured_at": "2026-01-01T12:00:00+00:00",
+      "duration_minutes": 80,
+      "coverage": "full_text",
+      "source_text": "Shared useful idea. Alpha reads files.",
+      "summary": [
+        "Shared useful idea."
+      ],
+      "ideas": [
+        "Shared useful idea."
+      ],
+      "tools": [
+        {
+          "name": "Alpha",
+          "kind": "CLI",
+          "origin": "source",
+          "purpose": "Synthetic file-reading lead",
+          "source_evidence": "Alpha reads files.",
+          "decision": "investigate",
+          "verification_status": "Synthetic fixture; not checked",
+          "official_docs_url": "https://example.org/docs",
+          "pricing": "unknown",
+          "security": "unknown",
+          "relevance": "Example lead only"
+        },
+        {
+          "name": "Beta",
+          "kind": "library",
+          "origin": "assistant_suggestion",
+          "purpose": "Synthetic suggestion, not a source claim",
+          "source_evidence": "Consider a separate example library after reviewing requirements.",
+          "decision": "skip",
+          "verification_status": "Not checked"
+        }
+      ],
+      "note_path": null,
+      "assessment": {
+        "recommendation": "Read",
+        "value": "moderate",
+        "confidence": "medium",
+        "rationale": "Source text retained.",
+        "time_guidance": "Read the overview.",
+        "reviewed_at": "2026-01-02T12:00:00+00:00",
+        "novelty": [
+          {
+            "idea": "Shared useful idea.",
+            "bucket": "new",
+            "evidence": "Shared useful idea.",
+            "compared_with": [],
+            "prior_evidence": "Not found in recorded library; not proof of ignorance."
+          }
+        ],
+        "credibility": {
+          "topic": "Files",
+          "judgment": "Unknown",
+          "comparison": "Unknown",
+          "unknowns": [
+            "Not independently verified."
+          ],
+          "established": false,
+          "comparison_established": false,
+          "compared_sources": [],
+          "evidence": []
+        }
+      }
+    },
+    {
+      "id": "video:synthetic-unknown",
+      "realm": "personal",
+      "kind": "video",
+      "title": "Synthetic video: metadata only",
+      "author": "Example presenter",
+      "url": "https://example.org/video",
+      "captured_at": "2026-01-03T12:00:00+00:00",
+      "duration_minutes": 20,
+      "coverage": "metadata_only",
+      "summary": [],
+      "ideas": [],
+      "tools": [],
+      "assessment": null,
+      "note_path": null
+    },
+    {
+      "id": "podcast:synthetic-overlap",
+      "realm": "personal",
+      "kind": "podcast",
+      "title": "Synthetic podcast: repeated file idea",
+      "author": "Example author",
+      "url": "https://example.org/podcast",
+      "captured_at": "2026-01-04T12:00:00+00:00",
+      "duration_minutes": null,
+      "coverage": "full_transcript",
+      "source_text": "Shared useful idea. Alpha reads files.",
+      "summary": [
+        "Shared useful idea."
+      ],
+      "ideas": [
+        "Shared useful idea."
+      ],
+      "tools": [
+        {
+          "name": "Alpha",
+          "kind": "CLI",
+          "origin": "source",
+          "purpose": "Synthetic file-reading lead",
+          "source_evidence": "Alpha reads files.",
+          "decision": "investigate",
+          "verification_status": "Synthetic fixture; not checked",
+          "official_docs_url": "https://example.org/docs",
+          "pricing": "unknown",
+          "security": "unknown",
+          "relevance": "Example lead only"
+        }
+      ],
+      "note_path": null,
+      "assessment": {
+        "recommendation": "Listen",
+        "value": "moderate",
+        "confidence": "medium",
+        "rationale": "Source text retained.",
+        "time_guidance": "Read the overview.",
+        "reviewed_at": "2026-01-04T13:00:00+00:00",
+        "novelty": [
+          {
+            "idea": "Shared useful idea.",
+            "bucket": "reinforcement",
+            "evidence": "Shared useful idea.",
+            "compared_with": [
+              "article:synthetic-alpha"
+            ],
+            "prior_evidence": "Shared useful idea."
+          }
+        ],
+        "credibility": {
+          "topic": "Files",
+          "judgment": "Unknown",
+          "comparison": "Unknown",
+          "unknowns": [
+            "Not independently verified."
+          ],
+          "established": false,
+          "comparison_established": false,
+          "compared_sources": [],
+          "evidence": []
+        }
+      }
+    }
+  ]
+}

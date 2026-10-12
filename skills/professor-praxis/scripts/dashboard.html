@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="description" content="Professor Praxis: an evidence-led, local learning snapshot.">
+<title>Professor Praxis · Worth your time</title>
+<style>
+:root{--paper:#f5f0de;--surface:#fffdf3;--ink:#171713;--muted:#575348;--line:#c2bba4;--olive:#171713;--light:#ffe78c;--rail:#ffd62e;--warm:#f5ecd0;--yellow:#ffd62e}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:15px/1.6 Arial,Helvetica,sans-serif}
+button,input,select{font:inherit;color:inherit;max-width:100%;touch-action:manipulation}
+button{cursor:pointer}
+a{color:var(--ink);text-underline-offset:3px;overflow-wrap:anywhere}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:3px solid #171713;outline-offset:4px}
+[hidden]{display:none!important}
+.app{display:grid;grid-template-columns:246px minmax(0,1fr);min-height:100vh}
+.sidebar{background:var(--rail);border-right:3px solid var(--ink);padding:30px 20px;display:flex;flex-direction:column;gap:32px}
+.brand{display:flex;flex-direction:column;align-items:flex-start;gap:18px;font:900 34px/.98 'Arial Black',Arial,sans-serif;letter-spacing:-1.6px}
+.brand span{display:block}
+.seal{border:2px solid var(--ink);width:42px;height:42px;display:grid;place-items:center;background:var(--ink);color:var(--yellow);font:700 23px/1 Georgia,serif;letter-spacing:0;flex-shrink:0}
+.realm{font:700 11px/1.5 'Courier New',monospace;letter-spacing:.08em;text-transform:uppercase;margin-top:17px;border-top:2px solid var(--ink);padding-top:10px}
+.nav{display:grid;gap:0;border-top:2px solid var(--ink)}
+.nav button{min-height:48px;text-align:left;padding:12px 10px;border:0;border-bottom:1px solid var(--ink);border-radius:0;background:transparent;font-weight:700}
+.nav button[aria-current=page]{background:var(--ink);color:var(--yellow)}
+.nav button:hover{background:var(--surface);color:var(--ink)}
+.rail-bottom{margin-top:auto;color:var(--ink);font:12px/1.65 'Courier New',monospace}
+.rail-bottom blockquote{margin:0 0 24px;font:italic 21px/1.45 Georgia,serif;border-top:3px solid var(--ink);padding-top:18px}
+.main{padding:26px 36px 32px;min-width:0;max-width:1600px}
+.topbar{display:flex;gap:16px;align-items:center;justify-content:space-between;padding:12px 0;border-top:5px solid var(--ink);border-bottom:1px solid var(--ink)}
+.eyebrow{font:700 11px/1.5 'Courier New',monospace;letter-spacing:.08em;text-transform:uppercase;color:var(--ink)}
+.tag{font:700 11px/1.5 'Courier New',monospace;background:var(--light);color:var(--ink);padding:4px 8px;border:1px solid var(--ink);border-radius:0;display:inline-block}
+h1{font:900 clamp(34px,4.1vw,57px)/1.05 'Arial Black',Arial,sans-serif;letter-spacing:-2px;margin:10px 0 14px}
+h2{font:700 25px/1.2 Georgia,'Times New Roman',serif;margin:8px 0 12px}
+h3{font:700 22px/1.3 Georgia,'Times New Roman',serif;margin:14px 0 8px}
+h4{margin:14px 0 7px;font-size:14px}
+p{margin:9px 0 14px}
+.heading{margin:28px 0 24px;padding-bottom:18px;border-bottom:3px double var(--ink)}
+.subtitle{font:17px/1.5 Georgia,'Times New Roman',serif;color:var(--muted);max-width:680px}
+.metadata,.hint{color:var(--muted);font-size:13px}
+.summary-strip{display:flex;flex-wrap:wrap;gap:10px 22px;background:var(--ink);color:var(--surface);padding:13px 16px;margin:20px 0;font:12px/1.5 'Courier New',monospace}
+.summary-strip strong{color:var(--yellow)}
+.filters{display:flex;gap:12px;flex-wrap:wrap;align-items:end;margin:23px 0}
+.filters label{display:grid;gap:5px;color:var(--ink);font:700 11px/1.5 'Courier New',monospace;min-width:0}
+.filters input,.filters select{border:1px solid var(--ink);border-radius:0;background:var(--surface);min-height:44px;padding:9px 11px;font:14px/1.5 Arial,sans-serif;font-weight:400;box-shadow:2px 2px 0 #d3ccb4}
+.filters .search-label{flex:1;min-width:180px}
+.cards{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:24px;align-items:start}
+.panel{min-width:0;background:var(--surface);border:1px solid var(--ink);border-radius:0;padding:23px;overflow-wrap:anywhere;box-shadow:4px 4px 0 #d6ceb5}
+.panel-header{display:flex;justify-content:space-between;align-items:start;gap:12px;flex-wrap:wrap;padding-bottom:12px;border-bottom:2px solid var(--ink)}
+.verdict{background:var(--light);margin:19px 0 16px;padding:15px;border:1px solid var(--ink);border-radius:0}
+.verdict strong{font:900 29px/1.15 'Arial Black',Arial,sans-serif;color:var(--ink)}
+.facts{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:12px;margin:12px 0 0;font-size:13px}
+.facts div{min-width:0}
+.facts dt{font:700 10px/1.5 'Courier New',monospace;text-transform:uppercase;letter-spacing:.06em;color:var(--muted)}
+.facts dd{margin:3px 0 0}
+ul{padding-left:21px;margin:12px 0}
+li{margin:8px 0}
+.actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:20px}
+.button{display:inline-flex;align-items:center;justify-content:center;min-height:44px;padding:9px 12px;border:1px solid var(--ink);border-radius:0;background:var(--surface);text-decoration:none;font-size:12px;font-weight:700}
+.button:hover{background:var(--light)}
+.button.primary{background:var(--ink);border-color:var(--ink);color:var(--yellow)}
+.button.primary:hover{background:#39382f}
+.empty{padding:30px 22px;border:1px dashed var(--ink);border-radius:0;color:var(--muted);grid-column:1/-1;background:var(--surface)}
+.empty h2{color:var(--ink)}
+footer{margin-top:32px;border-top:3px double var(--ink);padding-top:14px;font:11px/1.65 'Courier New',monospace;color:var(--muted)}
+footer p{margin:5px 0}
+dialog{width:calc(100% - 32px);max-width:780px;max-height:88vh;border:2px solid var(--ink);border-radius:0;padding:0;background:var(--surface);color:var(--ink);box-shadow:8px 8px 0 #17171366}
+dialog::backdrop{background:rgba(23,23,19,.55)}
+.dialog-header{position:sticky;top:0;z-index:1;background:var(--yellow);display:flex;justify-content:space-between;gap:16px;align-items:center;padding:18px 23px;border-bottom:2px solid var(--ink)}
+.dialog-header h2{margin:0;min-width:0;overflow-wrap:anywhere}
+.close{width:44px;height:44px;flex-shrink:0;border:1px solid var(--ink);background:var(--ink);color:var(--yellow);border-radius:0;font-size:24px}
+.dialog-content{padding:23px;overflow-wrap:anywhere}
+.note-text{white-space:pre-wrap;font:15px/1.75 Georgia,'Times New Roman',serif;overflow-wrap:anywhere}
+.evidence{border-top:1px solid var(--line);padding-top:14px;margin-top:18px}
+.evidence blockquote{margin:10px 0;background:var(--paper);padding:12px 14px;font:16px/1.6 Georgia,serif}
+.novelty-item{padding:12px 0;border-top:1px solid var(--line)}
+.novelty-item .tag{margin-right:8px}
+.novelty-item p{font-size:13px;margin-bottom:7px}
+@media(min-width:1700px){.main{padding:32px 48px}}
+@media(max-width:1100px){.app{grid-template-columns:204px minmax(0,1fr)}.main{padding:24px}.sidebar{padding:26px 18px}.brand{font-size:30px}.cards{grid-template-columns:1fr}}
+@media(max-width:700px){.app{display:block}.sidebar{padding:18px 16px 0;border-right:0;border-bottom:3px solid var(--ink);gap:18px}.brand{flex-direction:row;align-items:center;gap:12px;font-size:25px;letter-spacing:-1px}.brand span{display:inline}.seal{width:34px;height:34px;font-size:21px}.realm,.rail-bottom{display:none}.nav{display:flex;gap:0;border-top:1px solid var(--ink)}.nav button{font-size:12px;padding:11px 7px;flex:1;text-align:center;min-height:44px;border-bottom:0}.main{padding:20px 16px}.topbar{flex-wrap:wrap;gap:9px;border-top:3px solid var(--ink)}.topbar>.eyebrow{font-size:10px}h1{font-size:37px;letter-spacing:-1.5px}.heading{margin:22px 0}.subtitle{font-size:16px}.panel{padding:18px;box-shadow:3px 3px 0 #d6ceb5}.filters{gap:10px}.filters label{flex:1;min-width:125px}.filters .search-label{min-width:100%;width:100%}.summary-strip{gap:8px 16px;padding:13px}.dialog-header,.dialog-content{padding:18px}.facts{gap:12px}.button{max-width:100%}}
+@media(prefers-reduced-motion:no-preference){button,a{transition:background .12s,color .12s}}
+</style>
+</head>
+<body data-design="study-guide">
+<div class="app">
+<aside class="sidebar">
+  <div class="brand"><div class="seal" aria-hidden="true">P</div><div><span>Professor</span> <span>Praxis</span><div class="realm">Learner library</div></div></div>
+  <nav class="nav" aria-label="Learning views"></nav>
+  <div class="rail-bottom"><blockquote>A little less collecting.<br>A little more becoming.</blockquote>Local, by design.<br>Notes stay in Obsidian.<br>This snapshot is read-only.</div>
+</aside>
+<main class="main">
+  <header class="topbar"><span class="eyebrow">Professor Praxis / Evidence-led study guides</span><span class="tag">Local · Read-only snapshot</span></header>
+  <div class="heading"><div class="eyebrow">Before you press play</div><h1 id="view-title">Worth your time</h1><p class="subtitle" id="view-subtitle">Compare the value. Inspect the evidence. Keep uncertainty visible.</p></div>
+  <div id="snapshot-totals" class="summary-strip" aria-label="Snapshot totals"></div>
+  <div class="filters" aria-label="Search and filters">
+    <label class="search-label">Search sources and tools<input id="search" type="search" placeholder="Title, author, idea or tool…"></label>
+    <label class="source-filter">Source type<select id="type-filter" aria-label="Source type"><option value="all">All types</option><option value="article">Article</option><option value="video">Video</option><option value="podcast">Podcast</option></select></label>
+    <label class="source-filter">Recommendation<select id="recommendation-filter" aria-label="Recommendation"><option value="all">All recommendations</option><option>Watch</option><option>Listen</option><option>Read</option><option>Skim</option><option>Skip</option><option>Unknown</option></select></label>
+    <label class="tool-filter" hidden>Tool origin<select id="origin-filter" aria-label="Tool origin"><option value="all">All origins</option><option value="source_mentions">Source mentions (article, video, podcast)</option><option value="assistant_suggestion">Assistant suggestions</option><option value="video">Video mentions only</option><option value="source">Article / podcast mentions only</option><option value="unclear">Legacy provenance unknown</option></select></label>
+    <label class="tool-filter" hidden>Tool kind<select id="tool-kind-filter" aria-label="Tool kind"><option value="all">All kinds</option></select></label>
+  </div>
+  <p class="hint" id="source-result-count" aria-live="polite"></p>
+  <section id="view-worth" aria-label="Source assessments"><div class="cards" id="worth-results"></div></section>
+  <section id="view-library" aria-label="Saved library" hidden></section>
+  <section id="view-tools" aria-label="Tool leads" hidden></section>
+  <footer><p id="snapshot-time"></p><p>Captured is not consumed or mastered. Tool leads are not install authority.</p><p>Nothing here writes notes, changes history, fetches sources or synchronizes automatically.</p><div id="library-limits"></div></footer>
+</main>
+</div>
+<dialog id="details" aria-labelledby="dialog-title"><div class="dialog-header"><h2 id="dialog-title"></h2><button class="close" aria-label="Close details">×</button></div><div class="dialog-content" id="dialog-content"></div></dialog>
+<script id="praxis-data" type="application/json">%%PRAXIS_DATA%%</script>
+<script>
+'use strict';
+const data = JSON.parse(document.getElementById('praxis-data').textContent);
+const $ = id => document.getElementById(id);
+const sources = [...data.sources].sort((a,b) => {
+  const aNotAfterB = timestampNotAfter(a.captured_at, b.captured_at);
+  const bNotAfterA = timestampNotAfter(b.captured_at, a.captured_at);
+  if (aNotAfterB !== bNotAfterA) return aNotAfterB ? 1 : -1;
+  return a.id < b.id ? -1 : a.id > b.id ? 1 : 0;
+});
+const sourceMap = new Map(sources.map(source => [source.id, source]));
+// Every user-supplied string goes through textContent, never a Markdown/HTML parser.
+function el(tag, text, className) {
+  const node = document.createElement(tag);
+  if (text !== undefined && text !== null) node.textContent = String(text);
+  if (className) node.className = className;
+  return node;
+}
+function button(text, handler, primary=false) {
+  const node = el('button', text, 'button' + (primary ? ' primary' : ''));
+  node.type = 'button';
+  node.addEventListener('click', handler);
+  return node;
+}
+function fact(label, value) {
+  const node = el('div');
+  node.append(el('dt', label), el('dd', value ?? 'Unknown'));
+  return node;
+}
+let dialogOpener = null;
+function showDialog(title, content) {
+  if (!$('details').open) dialogOpener = document.activeElement;
+  $('dialog-title').textContent = title;
+  $('dialog-content').replaceChildren(content);
+  $('details').showModal();
+  $('details').querySelector('.close').focus({preventScroll:true});
+  $('details').scrollTop = 0;
+}
+function openNote(id) {
+  const source = sourceMap.get(id);
+  if (!source) return;
+  const content = el('div');
+  content.append(el('p', 'Local-only saved note. Privacy approval is required before deployment or sharing.', 'hint'), el('div', source.note_text || 'No saved note text is available for this source.', 'note-text'));
+  const links = el('div', null, 'actions');
+  links.append(safeLink('Open source', source.url));
+  if (source.obsidian_uri) links.append(safeLink('Open in Obsidian', source.obsidian_uri, true));
+  content.append(links);
+  showDialog(source.title + ' · Full saved note', content);
+}
+function formatDuration(minutes) {
+  // Display rounded hours/minutes without altering precise source metadata.
+  if (typeof minutes !== 'number' || !Number.isFinite(minutes) || minutes <= 0) return 'Unknown';
+  const total = Math.max(1, Math.round(minutes));
+  const hours = Math.floor(total / 60), remainder = total % 60;
+  const parts = [];
+  if (hours) parts.push(hours + (hours === 1 ? ' Hr' : ' Hrs'));
+  if (remainder) parts.push(remainder + (remainder === 1 ? ' Min' : ' Mins'));
+  return parts.join(' ');
+}
+function assessmentCard(source) {
+  const card = el('article', null, 'panel');
+  card.dataset.sourceId = source.id;
+  const assessment = source.assessment;
+  const head = el('div', null, 'panel-header');
+  head.append(el('span', source.kind + ' · ' + source.author, 'eyebrow'), el('span', assessment ? 'Assessed' : 'Captured only', 'tag'));
+  card.append(head, el('h2', source.title), el('p', formatDuration(source.duration_minutes) + ' · ' + source.coverage.replaceAll('_', ' '), 'metadata'));
+  const verdict = el('div', null, 'verdict');
+  const facts = el('dl', null, 'facts');
+  facts.append(fact('Value', assessment?.value ?? 'unknown'), fact('Confidence', assessment?.confidence ?? 'low'), fact('Source coverage', source.coverage.replaceAll('_', ' ')), fact('Status', source.status));
+  verdict.append(el('strong', assessment?.recommendation ?? 'Unknown'), facts);
+  card.append(verdict, el('p', assessment?.rationale ?? 'Worth your time is unknown: no content-based assessment is recorded.'), el('p', assessment?.time_guidance ?? 'Captured only. Novelty and source credibility are not established.', 'hint'));
+  card.append(el('h3', 'Material compared with your library'));
+  const novelty = el('dl', null, 'facts');
+  for (const [bucket, label] of Object.entries(buckets)) {
+    const count = assessment?.novelty.filter(item => item.bucket === bucket).length;
+    novelty.append(fact(label, count === undefined ? 'Not established' : count + ' recorded idea' + (count === 1 ? '' : 's')));
+  }
+  const credibility = credibilityState(assessment?.credibility, source);
+  card.append(novelty, el('p', 'New means not found in the recorded library — not new to you.', 'hint'), el('h3', 'Topic-specific source comparison'), el('p', credibility.judgment, 'hint'), el('p', credibility.comparison, 'hint'));
+  const actions = el('div', null, 'actions');
+  actions.append(button('Evidence & comparison', () => openComparison(source.id)), button('Full saved note', () => openNote(source.id), true));
+  card.append(actions);
+  return card;
+}
+const buckets = {new: 'New', reinforcement: 'Reinforcement', repetition: 'Repetition', unknown: 'Unknown'};
+function safeLink(text, value, allowObsidian=false) {
+  try {
+    const url = new URL(value);
+    if (url.username || url.password || !(['https:'].includes(url.protocol) || (allowObsidian && url.protocol === 'obsidian:' && url.hostname === 'open'))) return el('span', text + ' (link unavailable)', 'hint');
+    const node = el('a', text, 'button');
+    node.href = url.href;
+    if (url.protocol === 'https:') {node.target = '_blank'; node.rel = 'noopener noreferrer';}
+    return node;
+  } catch {return el('span', text + ' (link unavailable)', 'hint');}
+}
+function nonblank(value) {
+  return typeof value === 'string' && value.trim().length > 0;
+}
+function timestampMillis(value) {
+  // Date.parse alone accepts rolled-over calendar dates and ambiguous local times.
+  if (typeof value !== 'string') return NaN;
+  const match = /^(\d{4}-\d{2}-\d{2})T(\d{2}):(\d{2})(?::(\d{2})(?:\.\d+)?)?(Z|[+-]\d{2}:\d{2})$/.exec(value);
+  if (!match || +match[2] > 23 || +match[3] > 59 || +(match[4] || 0) > 59) return NaN;
+  const date = new Date(match[1] + 'T00:00:00Z');
+  if (!Number.isFinite(date.getTime()) || date.toISOString().slice(0,10) !== match[1]) return NaN;
+  return Date.parse(value);
+}
+function usableCitation(evidence) {
+  if (!nonblank(evidence?.claim) || !nonblank(evidence?.url) || !Number.isFinite(timestampMillis(evidence?.checked_at))) return false;
+  try {
+    const url = new URL(evidence.url);
+    return url.protocol === 'https:' && !!url.hostname && !url.username && !url.password;
+  } catch {return false;}
+}
+function timestampNotAfter(value, limit) {
+  const instant = timestampMillis(value), deadline = timestampMillis(limit);
+  if (!Number.isFinite(instant) || !Number.isFinite(deadline)) return false;
+  if (instant !== deadline) return instant < deadline;
+  // Date.parse truncates submillisecond fractions; compare the remaining digits.
+  const tail = text => (/\.(\d+)/.exec(text)?.[1] || '').slice(3);
+  const a = tail(value), b = tail(limit), width = Math.max(a.length, b.length);
+  return a.padEnd(width, '0') <= b.padEnd(width, '0');
+}
+function contentAvailableBy(source, deadline) {
+  const bounds = [source?.captured_at];
+  if (source.assessment != null) {
+    const reviewedAt = source.assessment.reviewed_at;
+    if (!timestampNotAfter(source.captured_at, reviewedAt)) return false;
+    bounds.push(reviewedAt);
+  }
+  if (Object.hasOwn(source, 'content_available_at')) bounds.push(source.content_available_at);
+  // Equivalent to max(capture, reassessment, optional projection) <= deadline.
+  return bounds.every(value => timestampNotAfter(value, deadline));
+}
+function credibilityState(credibility, source) {
+  const evidence = Array.isArray(credibility?.evidence) ? credibility.evidence : [];
+  const reviewedAt = source?.assessment?.reviewed_at;
+  const reviewChronology = contentAvailableBy(source, reviewedAt) && timestampNotAfter(reviewedAt, data.generated_at);
+  // Structural validity alone cannot make a later check evidence for this review.
+  const citations = evidence.filter(item => reviewChronology && usableCitation(item) && timestampNotAfter(item.checked_at, reviewedAt));
+  const established = credibility?.established === true && citations.length > 0;
+  const references = Array.isArray(credibility?.compared_sources) ? credibility.compared_sources : [];
+  const comparisonEstablished = established && credibility.comparison_established === true && references.length > 0 && new Set(references).size === references.length && references.every(id => {
+    const prior = sourceMap.get(id);
+    if (!prior || id === source.id || !['full_text', 'full_transcript', 'prior_note'].includes(prior.coverage)) return false;
+    // The validator derives this from retained evidence, including private
+    // source text. Missing/invalid metadata cannot establish a comparison.
+    const availableAt = prior.prior_evidence_available_at;
+    return timestampNotAfter(prior.captured_at, availableAt) &&
+      timestampNotAfter(availableAt, reviewedAt) && timestampNotAfter(availableAt, data.generated_at);
+  });
+  return {
+    established, comparisonEstablished, references, citations, invalidCitations: evidence.filter(item => !citations.includes(item)),
+    judgment: established ? credibility.judgment : 'Not established: topic-specific credibility has not been verified.',
+    comparison: comparisonEstablished ? credibility.comparison : 'Not established: no supported credibility comparison with a recorded prior source.'
+  };
+}
+function openComparison(id) {
+  const source = sourceMap.get(id);
+  if (!source) return;
+  const content = el('div');
+  const assessment = source.assessment;
+  content.append(el('p', source.coverage.replaceAll('_', ' ') + ' · ' + source.status, 'metadata'));
+  if (!assessment) {
+    content.append(el('h3', 'Unknown'), el('p', 'No content-based assessment is recorded. Novelty and topic-specific source credibility are not established.'), el('p', 'A prior capture is not a transcript, proof of consumption or evidence of mastery.', 'hint'));
+  } else {
+    content.append(el('p', 'Reviewed ' + assessment.reviewed_at, 'metadata'), el('h3', 'Novelty & prior evidence'), el('p', 'New means absent from the recorded library only. These are classifications, not percentage estimates.', 'hint'));
+    if (!assessment.novelty.length) content.append(el('p', 'No novelty comparison is recorded.', 'hint'));
+    for (const item of assessment.novelty) {
+      const section = el('section', null, 'novelty-item');
+      section.append(el('span', buckets[item.bucket] || 'Unknown', 'tag'), el('h4', item.idea), el('p', 'Source evidence: ' + item.evidence), el('p', 'Prior evidence: ' + (item.prior_evidence || 'Not recorded.')));
+      section.append(el('p', 'Compared with: ' + (item.compared_with.map(prior => sourceMap.get(prior)?.title || prior).join('; ') || 'No prior source recorded.'), 'hint'));
+      content.append(section);
+    }
+    const credibility = assessment.credibility;
+    const state = credibilityState(credibility, source);
+    content.append(el('h3', 'Credibility · ' + credibility.topic), el('p', state.judgment), el('p', state.comparison));
+    if (state.comparisonEstablished) content.append(el('p', 'Compared sources: ' + state.references.map(prior => sourceMap.get(prior).title).join('; '), 'hint'));
+    content.append(el('h4', state.established ? 'Cited evidence' : 'Recorded citations · credibility not established'));
+    if (!state.citations.length) content.append(el('p', 'No usable external credibility citations are recorded.', 'hint'));
+    for (const evidence of state.citations) {
+      const row = el('div', null, 'evidence');
+      row.append(safeLink(evidence.claim, evidence.url), el('p', 'Checked ' + (evidence.checked_at || 'not recorded'), 'hint'));
+      content.append(row);
+    }
+    if (state.invalidCitations.length) {
+      content.append(el('h4', 'Unusable recorded citations · not cited evidence'));
+      for (const evidence of state.invalidCitations) {
+        const row = el('div', null, 'evidence');
+        row.append(el('p', nonblank(evidence?.claim) ? evidence.claim : 'No citation claim recorded.'), el('p', 'Citation unavailable: invalid claim, HTTPS URL or aware timestamp, or unsupported evidence chronology.', 'hint'));
+        content.append(row);
+      }
+    }
+    content.append(el('h4', 'Unknowns'), list(credibility.unknowns, 'No additional unknowns recorded; this is not a blanket source endorsement.'));
+  }
+  content.append(safeLink('Open source', source.url));
+  showDialog(source.title + ' · Evidence & comparison', content);
+}
+function list(items, emptyText) {
+  if (!items?.length) return el('p', emptyText, 'hint');
+  const node = el('ul');
+  node.append(...items.map(item => el('li', item)));
+  return node;
+}
+function sourceHeader(source, card) {
+  card.dataset.sourceId = source.id;
+  card.append(el('span', source.kind + ' · ' + source.author, 'eyebrow'), el('h2', source.title), el('p', source.coverage.replaceAll('_', ' ') + ' · Captured ' + source.captured_at, 'metadata'));
+}
+function openSummary(id) {
+  const source = sourceMap.get(id);
+  if (!source) return;
+  const content = el('div');
+  content.append(el('p', source.coverage.replaceAll('_', ' ') + ' · ' + source.status, 'metadata'), el('h3', 'Summary'), list(source.summary, 'No source summary is recorded.'), el('h3', 'Saved ideas'), list(source.ideas, 'No ideas are recorded.'));
+  showDialog(source.title + ' · Summary & ideas', content);
+}
+function openAction(id) {
+  const source = sourceMap.get(id);
+  if (!source) return;
+  const content = el('div');
+  content.append(el('p', source.action || 'No action is recorded.'), el('p', 'Recorded state: ' + (source.action_state ?? 'unknown'), 'tag'), el('p', 'Read-only. A recorded action is not proof of application or a new commitment.', 'hint'));
+  showDialog(source.title + ' · Action', content);
+}
+function libraryCard(source) {
+  const card = el('article', null, 'panel');
+  sourceHeader(source, card);
+  card.append(el('h3', 'Summary'), list(source.summary, 'No summary is available from this capture.'), el('h3', 'Recorded action'), el('p', source.action || 'No action is recorded.'), el('p', 'State: ' + (source.action_state ?? 'none'), 'hint'));
+  const actions = el('div', null, 'actions');
+  actions.append(button('Summary & ideas', () => openSummary(source.id)), button('Full saved note', () => openNote(source.id), true));
+  if (source.action) actions.append(button('Inspect action', () => openAction(source.id)));
+  actions.append(safeLink('Open source', source.url));
+  card.append(actions);
+  return card;
+}
+function originLabel(origin) {
+  return {video: 'Video source mention', source: 'Article / podcast source mention', assistant_suggestion: 'Assistant suggestion · not a source claim', unclear: 'Legacy provenance unknown'}[origin] || 'Legacy provenance unknown';
+}
+function toolMatches(tool) {
+  const origin = $('origin-filter').value;
+  if ($('tool-kind-filter').value !== 'all' && tool.kind !== $('tool-kind-filter').value) return [];
+  const titleMatches = matches(tool.name + ' ' + tool.kind);
+  return tool.mentions.filter(mention => (origin === 'all' || mention.origin === origin || (origin === 'source_mentions' && ['video', 'source'].includes(mention.origin))) && (titleMatches || matches(JSON.stringify(mention) + ' ' + (sourceMap.get(mention.source_id)?.title || '') + ' ' + (sourceMap.get(mention.source_id)?.author || ''))));
+}
+function openTool(tool, mentions) {
+  const content = el('div');
+  content.append(el('p', tool.kind, 'tag'), el('p', 'Showing ' + mentions.length + ' of ' + tool.mentions.length + ' recorded mentions. Evidence follows the current search and origin filters.', 'hint'));
+  for (const mention of mentions) {
+    const source = sourceMap.get(mention.source_id);
+    const section = el('section', null, 'evidence');
+    section.dataset.mentionSourceId = mention.source_id;
+    const sourceMention = ['source', 'video'].includes(mention.origin);
+    const evidenceLabel = sourceMention ? 'Retained source evidence' : mention.origin === 'assistant_suggestion' ? 'Suggestion rationale · not a source quote' : 'Retained legacy context · not a verified source quote';
+    section.append(el('span', originLabel(mention.origin), 'tag'), el('h3', source?.title || 'Unknown source · ' + mention.source_id), el('p', mention.purpose), el('h4', evidenceLabel), el(sourceMention ? 'blockquote' : 'p', mention.evidence || 'No evidence is recorded.'), el('p', 'Anchor: ' + (mention.anchor || 'Not recorded'), 'hint'), el('h4', 'Verification scope'), el('p', mention.verification || 'Not checked'), el('p', 'Checked: ' + (mention.verification_date || 'Not recorded'), 'hint'), el('h4', 'Relevance'), el('p', mention.relevance || 'Unknown'));
+    const facts = el('dl', null, 'facts');
+    facts.append(fact('Pricing', mention.pricing), fact('Security', mention.security), fact('Decision', mention.decision));
+    section.append(facts);
+    const actions = el('div', null, 'actions');
+    if (mention.docs_url) actions.append(safeLink('Documentation', mention.docs_url));
+    if (source) actions.append(safeLink('Open source', source.url));
+    section.append(actions);
+    content.append(section);
+  }
+  content.append(el('p', 'A documentation check is not a deployment test or security audit. Listing a tool does not authorize installation, spending or a connection.', 'hint'));
+  showDialog(tool.name + ' · Evidence & details', content);
+}
+function toolCard(tool, mentions) {
+  const card = el('article', null, 'panel');
+  card.dataset.toolId = tool.id;
+  card.append(el('span', tool.kind, 'eyebrow'), el('h2', tool.name), el('p', mentions.length + ' of ' + tool.mentions.length + ' recorded mentions match filters', 'hint'));
+  for (const mention of mentions) {
+    const row = el('div', null, 'evidence');
+    row.append(el('span', originLabel(mention.origin), 'tag'), el('p', sourceMap.get(mention.source_id)?.title || mention.source_id), el('p', mention.purpose, 'hint'));
+    card.append(row);
+  }
+  card.append(button('Evidence & details', () => openTool(tool, mentions)));
+  return card;
+}
+function renderTools() {
+  const filtered = data.tools.map(tool => ({tool, mentions: toolMatches(tool)})).filter(item => item.mentions.length);
+  $('tool-result-count').textContent = filtered.length + ' of ' + data.tools.length + ' tools · ' + filtered.reduce((count, item) => count + item.mentions.length, 0) + ' matching mentions';
+  $('tools-results').replaceChildren(...(filtered.length ? filtered.map(item => toolCard(item.tool, item.mentions)) : [data.tools.length ? el('div', 'No tools match these filters. Clear the search or choose a different origin or kind.', 'empty') : emptyState('No tool leads yet', 'No tool mentions or assistant suggestions are recorded in this snapshot. Leads will appear here only when saved with per-source provenance.')]));
+}
+function emptyState(title, text) {
+  const node = el('div', null, 'empty');
+  node.append(el('h2', title), el('p', text));
+  return node;
+}
+let view = 'worth';
+const views = {
+  worth: ['Worth your time', 'Compare the value. Inspect the evidence. Keep uncertainty visible.'],
+  library: ['Library', 'Every source keeps its own summary, action and complete saved note.'],
+  tools: ['Tools', 'Leads, not endorsements. Source mentions and assistant suggestions stay separate.']
+};
+function switchView(next) {
+  view = next;
+  for (const id of Object.keys(views)) $('view-' + id).hidden = id !== next;
+  for (const node of document.querySelectorAll('.nav button')) {
+    if (node.dataset.view === next) node.setAttribute('aria-current', 'page');
+    else node.removeAttribute('aria-current');
+  }
+  $('view-title').textContent = views[next][0];
+  $('view-subtitle').textContent = views[next][1];
+  for (const node of document.querySelectorAll('.source-filter')) node.hidden = next === 'tools';
+  for (const node of document.querySelectorAll('.tool-filter')) node.hidden = next !== 'tools';
+  $('source-result-count').hidden = next === 'tools';
+  renderSources();
+  renderTools();
+}
+function matches(value) {
+  return String(value).toLowerCase().includes($('search').value.trim().toLowerCase());
+}
+function renderSources() {
+  const filtered = sources.filter(source => matches(JSON.stringify(source)) && ($('type-filter').value === 'all' || source.kind === $('type-filter').value) && ($('recommendation-filter').value === 'all' || (source.assessment?.recommendation ?? 'Unknown') === $('recommendation-filter').value));
+  $('source-result-count').textContent = filtered.length + ' of ' + sources.length + ' sources';
+  for (const [id, createCard] of [['worth-results', assessmentCard], ['library-results', libraryCard]]) {
+    if (!$(id)) continue;
+    $(id).replaceChildren(...(filtered.length ? filtered.map(createCard) : [sources.length ? el('div', 'No sources match these filters. Clear the search or choose a different type or recommendation.', 'empty') : emptyState(id === 'worth-results' ? 'Nothing captured yet' : 'No saved sources yet', 'Add an approved capture locally, then refresh this snapshot. A content-based grade needs the full source text or transcript; saving a URL alone leaves the value unknown.')]));
+  }
+}
+for (const [id, [title]] of Object.entries(views)) {
+  const node = button(title, () => switchView(id));
+  node.dataset.view = id;
+  document.querySelector('.nav').append(node);
+}
+const libraryResults = el('div', null, 'cards');
+libraryResults.id = 'library-results';
+$('view-library').append(libraryResults);
+const toolCount = el('p', null, 'hint');
+toolCount.id = 'tool-result-count';
+toolCount.setAttribute('aria-live', 'polite');
+const toolsResults = el('div', null, 'cards');
+toolsResults.id = 'tools-results';
+$('view-tools').append(toolCount, toolsResults);
+for (const kind of [...new Set(data.tools.map(tool => tool.kind))].sort()) {
+  const option = el('option', kind);
+  option.value = kind;
+  $('tool-kind-filter').append(option);
+}
+for (const id of ['type-filter', 'recommendation-filter']) $(id).addEventListener('change', renderSources);
+for (const id of ['origin-filter', 'tool-kind-filter']) $(id).addEventListener('change', renderTools);
+$('search').addEventListener('input', () => {renderSources(); renderTools();});
+switchView('worth');
+$('snapshot-time').textContent = 'Snapshot ' + data.generated_at + ' · ' + data.realm;
+for (const [field, label] of Object.entries({sources: 'sources', assessed: 'assessed', captured: 'captured only', ideas: 'recorded ideas', open_actions: 'open actions', tool_leads: 'tool leads', investigate_leads: 'leads to investigate'})) {
+  $('snapshot-totals').append(el('span', data.counts[field] + ' ' + label));
+}
+const limits = data.library_limits;
+const limitTexts = Array.isArray(limits) ? limits : (limits && typeof limits === 'object' ? Object.entries(limits).map(([key, value]) => key.replaceAll('_', ' ') + ': ' + (typeof value === 'string' ? value : JSON.stringify(value))) : [limits]);
+$('library-limits').append(list(limitTexts, 'Recorded library coverage is limited; absence is not proof of personal novelty.'), el('p', 'Lexical overlap retrieval is not semantic novelty or trust grading.'), el('p', 'Local-only notes. Privacy approval is required before any deployment or sharing.'));
+$('details').querySelector('.close').addEventListener('click', () => $('details').close());
+// Native modal semantics trap Tab and handle Escape. Restore the exact opener.
+$('details').addEventListener('close', () => {
+  if (dialogOpener?.isConnected) dialogOpener.focus({preventScroll:true});
+});
+</script>
+</body>
+</html>

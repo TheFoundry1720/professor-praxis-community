@@ -1,0 +1,19 @@
+{
+  "id": "article:synthetic-schema-example",
+  "realm": "personal",
+  "kind": "article",
+  "title": "SYNTHETIC metadata schema example (not a real assessment)",
+  "author": "SYNTHETIC example author",
+  "url": "https://example.org/schema-example",
+  "captured_at": "2020-01-01T12:00:00+00:00",
+  "duration_minutes": null,
+  "coverage": "metadata_only",
+  "summary": [],
+  "ideas": [],
+  "tools": [],
+  "source_text": null,
+  "note_path": null,
+  "assessment": null,
+  "action": null,
+  "action_state": null
+}
